@@ -27,14 +27,10 @@ namespace LotDetailsEFCore
 
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            //string sb_connection = Environment.GetEnvironmentVariable("CTGServicebus_Connection");
-
-            //builder.Services.AddDbContextPool<AppDBContext>(
-            //          options => options.UseSqlServer(Environment.GetEnvironmentVariable("ConnectionString")));
-
             string connectionString = Environment.GetEnvironmentVariable("ConnectionString");
-            builder.Services.AddDbContext<AppDBContext>(
-              options => SqlServerDbContextOptionsExtensions.UseSqlServer(options, connectionString));
+
+            builder.Services.AddDbContextPool<AppDBContext>(
+                      options => options.UseSqlServer(connectionString));
 
             //builder.Services.AddSingleton<ILotTypesRepository, SQLLotTypesRepository>();
         }

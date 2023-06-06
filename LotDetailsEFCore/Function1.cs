@@ -9,6 +9,8 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using LotDetailsEFCore.EntityFramework;
 using Microsoft.EntityFrameworkCore;
+using LotDetailsEFCore.Models;
+using System.Collections.Generic;
 
 namespace LotDetailsEFCore
 {
@@ -38,7 +40,18 @@ namespace LotDetailsEFCore
                 ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
                 : $"Hello, {name}. This HTTP triggered function executed successfully.";
 
-            return new OkObjectResult(_appDBContext.LotTypes);
+            List<LotType> lotTypes = null;
+            try
+            {
+                lotTypes = _appDBContext.LotTypes.ToListAsync().Result;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return new OkObjectResult(lotTypes);
         }
     }
 }
