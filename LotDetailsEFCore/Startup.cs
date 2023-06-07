@@ -1,4 +1,6 @@
-﻿using LotDetailsEFCore.EntityFramework;
+﻿using LotDetails.DataAccess;
+using LotDetails.DataAccess.Model;
+using LotDetails.DataAccess.Repository;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -32,7 +34,8 @@ namespace LotDetailsEFCore
             builder.Services.AddDbContextPool<AppDBContext>(
                       options => options.UseSqlServer(connectionString));
 
-            //builder.Services.AddSingleton<ILotTypesRepository, SQLLotTypesRepository>();
+            //builder.Services.AddScoped<IEntityBaseRepository<LotType>, EntityBaseRepository<LotType>>();
+            builder.Services.AddScoped(typeof(IEntityBaseRepository<>), typeof(EntityBaseRepository<>));
         }
     }
 }

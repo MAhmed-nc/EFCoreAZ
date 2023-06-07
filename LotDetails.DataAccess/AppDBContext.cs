@@ -1,6 +1,6 @@
-﻿using LotDetails.DataAccess.Model;
+﻿using LotDetails.DataAccess.Configuration;
+using LotDetails.DataAccess.Model;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace LotDetails.DataAccess
 {
@@ -11,5 +11,10 @@ namespace LotDetails.DataAccess
 
         }
         public DbSet<LotType> LotTypes { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            new LotTypeIndConfiguration().Configure(modelBuilder.Entity<LotType>());
+        }
     }
 }

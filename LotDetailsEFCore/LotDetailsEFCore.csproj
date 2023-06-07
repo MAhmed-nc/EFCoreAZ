@@ -4,6 +4,14 @@
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="EntityFramework\**" />
+    <Compile Remove="Models\**" />
+    <EmbeddedResource Remove="EntityFramework\**" />
+    <EmbeddedResource Remove="Models\**" />
+    <None Remove="EntityFramework\**" />
+    <None Remove="Models\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="AppDBContext.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -12,6 +20,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.1.1" />
   <PackageReference Include="System.Linq.Async" Version="6.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LotDetails.DataAccess\LotDetails.DataAccess.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

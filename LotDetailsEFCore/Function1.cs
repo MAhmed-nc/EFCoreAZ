@@ -7,20 +7,26 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using LotDetailsEFCore.EntityFramework;
-using Microsoft.EntityFrameworkCore;
-using LotDetailsEFCore.Models;
 using System.Collections.Generic;
+using LotDetails.DataAccess.Model;
+using LotDetails.DataAccess.Repository;
+using System.Linq;
 
 namespace LotDetailsEFCore
 {
     public class Function1
     {
-        private readonly AppDBContext _appDBContext;
+        //private readonly AppDBContext _appDBContext;
+        private readonly IEntityBaseRepository<LotType> _lotTypeRepo; 
 
-        public Function1(AppDBContext appDBContext)
+        //public Function1(AppDBContext appDBContext)
+        //{
+        //    _appDBContext = appDBContext;
+        //}
+
+        public Function1(IEntityBaseRepository<LotType> lotTypeRepo)
         {
-            _appDBContext = appDBContext;
+            _lotTypeRepo = lotTypeRepo;
         }
 
         [FunctionName("Function1")]
@@ -43,7 +49,8 @@ namespace LotDetailsEFCore
             List<LotType> lotTypes = null;
             try
             {
-                lotTypes = _appDBContext.LotTypes.ToListAsync().Result;
+                //lotTypes = await _appDBContext.LotTypes.ToListAsync();
+                lotTypes = _lotTypeRepo.GetAll().ToList();
             }
             catch (Exception ex)
             {
